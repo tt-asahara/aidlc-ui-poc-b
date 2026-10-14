@@ -2,7 +2,9 @@
 name: ui-poc-comparison
 plugin: ui-poc
 depth: Standard
-keywords: []
+keywords:
+  - ui-poc-comparison
+  - design-treatment-comparison
 description: Controlled UI comparison with rough and refined design plus unit handoffs
 skeleton: on
 runner: true
