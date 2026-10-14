@@ -36,7 +36,7 @@ for line in ('id: ui-poc-evidence','default_severity: blocking','fire_on: gate',
  assert line in sensor
 assert (root/'tools/aidlc-sensor-ui-poc-evidence.ts').is_file()
 verified=[]
-for p in source.rglob('*'):
+for p in sorted(source.rglob('*')):
  if p.is_file() and p.relative_to(source).as_posix() in blobs:
   b=p.read_bytes(); expected=blobs[p.relative_to(source).as_posix()]
   actual=hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
