@@ -1,0 +1,186 @@
+{
+  "upstream_commit": "6a378b53c0a4fe0641ed7d8de8dfff94264d5b6a",
+  "verification": "Git blob identity checked; one materialization trailing newline tolerated and recorded",
+  "files": [
+    {
+      "path": "LICENSE",
+      "git_blob_sha": "09951d9f8743a65d034616e602995a40a56c5cbd",
+      "local_sha256": "9addc0daa232268d935627b3380eb1ba7cc7ed3a567aa24492ac11795e9e393b",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/scopes/aidlc-feature.md",
+      "git_blob_sha": "d06a423e9d7332581f8956b8d34ea9a75cdd2d8a",
+      "local_sha256": "4d2e3191df221084292ea2198623ba7559acacba6fe13fb9cf32356ca50cff39",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/scopes/aidlc-poc.md",
+      "git_blob_sha": "30ece741dca237bfc6596609b4d96cda140581f3",
+      "local_sha256": "934344c0f44c44e65e5a68e68cf6661fd53374b67b452d01f358870e16a0e759",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/sensors/aidlc-required-sections.md",
+      "git_blob_sha": "e3eefb3c97113230c6a72e53f9f74e4ad00de03e",
+      "local_sha256": "ad6a139cebeb26ead1b936817b8d9981310c4c7336e0bc33a68fff5e71962b13",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/agents/aidlc-developer-agent.md",
+      "git_blob_sha": "124dd0a909a0c845d47cb0915241f216cf529d01",
+      "local_sha256": "03be640213d9d0f552009db0e8fc8c4f2ae55dff5662ff4c8aecd9e954832512",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/agents/aidlc-design-agent.md",
+      "git_blob_sha": "e09889850048f8d8896519ce159da453e711edb0",
+      "local_sha256": "f5a44de4b4e4c86eeeaf1c420c817e23a2c67c18dc8dd5d78ffa5f3702977849",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/tools/aidlc-sensor.ts",
+      "git_blob_sha": "ccc7f96ccc99812d8b9d745d131d5436b79b4795",
+      "local_sha256": "6f9abe1d9ce55aaf957541510183cf1d043dbada94840170706a34e536c92f4a",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/tools/aidlc-sensor-schema.ts",
+      "git_blob_sha": "edb7db138d41eec4f7114444aa4736b362070a55",
+      "local_sha256": "c551e1708341e1e36f0328217f63ff4905fcf99894b1a0139e20c82f55ebea0b",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/tools/aidlc-plugin-emit.ts",
+      "git_blob_sha": "ee8d868d60eb373840e667b37529cca80e802a55",
+      "local_sha256": "18ac1ef1287b752d5278cc70f663c7bae67a53ed30e6f21a6891b749a343280b",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/tools/aidlc-graph.ts",
+      "git_blob_sha": "54b4a1dc89b7d1bce752f3b1f04fbac310b3a481",
+      "local_sha256": "7f62cf0b3239b5b18a6317cf113616a1d1e5bd47b0329df12b5f31ff6c71b8e6",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/tools/aidlc-artifact-resolution.ts",
+      "git_blob_sha": "c8ecd09482b96adf5c87410d0cf484176fbafe20",
+      "local_sha256": "9fdd924602cc928ec8c9dc3db01df9377f139fc658bc98f84c1fca0614cd549e",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/tools/aidlc-artifact-vocabulary.ts",
+      "git_blob_sha": "a88acdb37b1451daa87e002c2a937d3982c60121",
+      "local_sha256": "0944947c0a00d8cca4c5a8e95c2f7f3961b4a56c51b6ad43265037540b296051",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/tools/aidlc-stage-schema.ts",
+      "git_blob_sha": "c5a2a7f3c7f921fe88513b083ef24d8586029f25",
+      "local_sha256": "3f769f772aeb1dc78825e80e6020949ca09fa3918c2ad89bbf71156ee4e84885",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/aidlc-common/stages/ideation/rough-mockups.md",
+      "git_blob_sha": "f6bda4ba739c06e91e7157e2b07185e336984b33",
+      "local_sha256": "14ab07d04767309a14eea69574704239c0cb36651aed8e24a057425d28a1ecc0",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/aidlc-common/stages/inception/units-generation.md",
+      "git_blob_sha": "77abee1dc5e53f5460fd534e1ec9e4c092cdd6e5",
+      "local_sha256": "7ed6ba23cb3b6702f09abe995c55e51101bfc03690ba134af408556cd34cc971",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/aidlc-common/stages/inception/domain-design.md",
+      "git_blob_sha": "da44e5a74d4a33694a0e01ce992f63aedd4204e2",
+      "local_sha256": "c1c5b38e76099fb262b4bc1275d23cddcbfbd823d88fa12c7cc06b73d42d40b4",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/aidlc-common/stages/inception/refined-mockups.md",
+      "git_blob_sha": "02feee5d5ca1f9af396377915853f15cd9e0ea01",
+      "local_sha256": "b8e56e7fd11874ca77bc8de0b0440be58a2524c9f6bd8b8ecef636795cff3908",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/aidlc-common/stages/inception/user-stories.md",
+      "git_blob_sha": "5c4c6a43aadbfd184883f9bd070a47690500bad8",
+      "local_sha256": "2c12b43c046f101036b53a3fa4c6fce93849038fe0813f00829664b195147a86",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/aidlc-common/stages/inception/requirements-analysis.md",
+      "git_blob_sha": "faf37a4b27ce09fae044b1e713217392665fc6d0",
+      "local_sha256": "d660a8e0ea5dc05f7373df0a952289fe0661d6349ffd9c8b7597494e00c2452c",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/aidlc-common/stages/construction/functional-design.md",
+      "git_blob_sha": "44f3ba1b27dcebeb19200dcdc2dfd8b3a9af1758",
+      "local_sha256": "b502049b5fa75291e7631dde72b95868507e0a733192a47e7768828c67bce597",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/aidlc-common/stages/construction/build-and-test.md",
+      "git_blob_sha": "fb5ec78a351b45db63b9bd43a45b5f15908bd8e6",
+      "local_sha256": "eed6cbc5ebacc0a9b6320f9a0abeb22caf9c2388aa8e207c0fb067ab56308909",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "core/aidlc-common/stages/construction/code-generation.md",
+      "git_blob_sha": "f55ec478389a86c67782806ac12c19b04e6488c8",
+      "local_sha256": "af4abd206601f1b56b3cc4fec0f4551301caae59f7a625902419a635e44fe479",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "docs/harness-engineering/10-authoring-a-plugin.md",
+      "git_blob_sha": "3d4247d8271a465b5783e944ac88ca9ba2d4db7e",
+      "local_sha256": "feea42436df2f191b46d8d86ff9ccfe6fe0e72d751632bbbafd5f4f7dd4da3e7",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "docs/harness-engineering/06-sensors.md",
+      "git_blob_sha": "fe3c3cc526dc32653fdcfb8eb182b8a951ecea68",
+      "local_sha256": "1a12eaead0f8a2af32ac3e282975ac4f4f829fd902c8f3d093a10927eb40bf68",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "docs/reference/07-sensor-system.md",
+      "git_blob_sha": "d5f3098bf4078aee70b1b9b0c4996881888bd1b1",
+      "local_sha256": "884cd5e8caf75456717ef2b219bb2c22a18f83c94423923e0768d85c0e20ae20",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "docs/reference/16-artifact-vocabulary.md",
+      "git_blob_sha": "c26be8bcdb98dcc288830a3d8da75273c860d13e",
+      "local_sha256": "529ef75b0c17ce5c3fb2413505a4736c7755cdd0285cc2739187f53a4e242dbb",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "docs/reference/18-plugin-mechanism.md",
+      "git_blob_sha": "39d20fd3837654e91064b1e1c42b11ff372e0635",
+      "local_sha256": "c1456c08a6b4f26beaed5aabbceb14d3140f73ed43cc5fad82ffdde1548a4086",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "docs/reference/15-stage-definition.md",
+      "git_blob_sha": "ed26b770733586920e98a15d6a5e00388784ae9b",
+      "local_sha256": "d1a14146004115720aef15e2caf04931c87e59c544c7de72f39f87205e183f1a",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "docs/guide/04-phases-and-stages.md",
+      "git_blob_sha": "589cdbf19e21e714389017d7bd05522387f7594c",
+      "local_sha256": "cf5cb5a6f4524e20d401d14ac2c15c1d989c37f1850ba417c398631239461d6a",
+      "trailing_newline_normalization": true
+    },
+    {
+      "path": "docs/guide/harnesses/codex-cli.md",
+      "git_blob_sha": "98f045cf39bfc996d0f8d1473890fd14f0aaed33",
+      "local_sha256": "072942af43bd17e2f06e8a441a541c8916a537b216abbfc116f0af9476912179",
+      "trailing_newline_normalization": true
+    }
+  ]
+}
