@@ -31,6 +31,9 @@ test('conditional false records do-not-use without invocation', () => {
   assert.equal(p.pass, true);
   assert.ok(p.invocations.every(x => x.decision === 'do-not-use'));
 });
+test('routing facts must be booleans', () => {
+  assert.equal(plan('domain-design', {unresolved_domain_terms_or_boundaries:'false'}).pass, false);
+});
 test('rough routing requires the logic uncertainty fact and uses bounded adapters', () => {
   const p = plan('rough-mockups', {state_model_uncertainty:false});
   assert.equal(p.pass, true);
@@ -47,7 +50,7 @@ test('verified evidence distinguishes reads, application, approval and publicati
   const events = [];
   for (const inv of p.invocations) {
     for (const entrypoint of inv.entrypoints) events.push({type:'skill-read',skill:inv.skill,entrypoint,sha256:sha256(path.join(root,entrypoint))});
-    events.push({type:'skill-applied',skill:inv.skill,inputs:['approved-refined-html'],outputs:['implemented-ui']});
+    events.push({type:'skill-applied',skill:inv.skill,inputs:inv.inputs,outputs:inv.outputs});
   }
   const dir = fs.mkdtempSync(path.join(os.tmpdir(),'ui-poc-routing-')); t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));
   const log = path.join(dir,'log.json'); fs.writeFileSync(log,JSON.stringify({schema:1,arm:'B',stage:'code-generation',configSha256:p.configSha256,events}));

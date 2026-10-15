@@ -20,6 +20,8 @@ node <harness>/tools/ui-poc-b-routing.cjs verify --stage <slug> --facts <stage-f
 
 `skill-read` proves the exact entrypoint bytes were read; `skill-applied` separately names actual inputs and outputs. A read alone never proves application. The verifier rejects approval and tracker-publication events. It checks repeatable routing and evidence shape, not identical model prose or pixels.
 
+For a false conditional fact the log records `skill-skipped` with the condition and reason; this is different from silently omitting the skill. Facts must be JSON booleans, and application evidence must include every configured input and output name.
+
 The read event is an auditable agent attestation whose hash is checked against the installed file; software cannot prove that a model cognitively followed prose. Likewise, `prototype-ui`, `prototype-logic`, `grilling`, and `domain-modeling` are recorded as `bounded-adapter`, not as full upstream-skill execution, because the adapter deliberately excludes upstream lifecycle actions that conflict with AI-DLC.
 
 ### Why rough-mockups contains bounded HTML exploration

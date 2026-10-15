@@ -17,6 +17,7 @@ function plan(stage, facts = {}) {
     let result = rule.decision;
     if (result === 'conditional') {
       if (!Object.hasOwn(facts, rule.condition)) return fail(`Missing routing fact: ${rule.condition}`);
+      if (typeof facts[rule.condition] !== 'boolean') return fail(`Routing fact must be boolean: ${rule.condition}`);
       result = facts[rule.condition] === true ? 'use' : 'do-not-use';
     }
     const skill = cfg.skills[rule.skill];
@@ -42,7 +43,10 @@ function verify(stage, logPath, facts = {}) {
       if (!fs.existsSync(local) || hash(fs.readFileSync(local)) !== event.sha256) return fail(`Skill-read hash does not match installed entrypoint: ${entrypoint}`);
     }
     const applied = log.events.find(e => e.type === 'skill-applied' && e.skill === invocation.skill);
-    if (!applied || !Array.isArray(applied.inputs) || !Array.isArray(applied.outputs) || !applied.inputs.length || !applied.outputs.length) return fail(`Missing skill-applied evidence: ${invocation.skill}`);
+    if (!applied || !Array.isArray(applied.inputs) || !Array.isArray(applied.outputs) || !invocation.inputs.every(x => applied.inputs.includes(x)) || !invocation.outputs.every(x => applied.outputs.includes(x))) return fail(`Incomplete skill-applied evidence: ${invocation.skill}`);
+  }
+  for (const invocation of expected.invocations.filter(x => x.decision === 'do-not-use' && x.condition)) {
+    if (!log.events.some(e => e.type === 'skill-skipped' && e.skill === invocation.skill && e.condition === invocation.condition && typeof e.reason === 'string' && e.reason.trim())) return fail(`Missing conditional skip evidence: ${invocation.skill}`);
   }
   if (log.events.some(e => e.type === 'approval' || e.type === 'tracker-publish')) return fail('Skill evidence log must not record or perform approval or tracker publication');
   return {pass:true, findings_count:0, findings:[]};
