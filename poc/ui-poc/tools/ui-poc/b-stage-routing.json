@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "arm": "B",
+  "sourceCommit": "49dd158d1076134a641b33efb035946536778336",
+  "defaultDecision": "do-not-use",
+  "skills": {
+    "frontend-design": {"repository": "anthropics/skills", "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44", "entrypoints": [".agents/skills/frontend-design/SKILL.md"]},
+    "prototype-ui": {"repository": "mattpocock/skills", "commit": "49dd158d1076134a641b33efb035946536778336", "applicationKind": "bounded-adapter", "entrypoints": [".agents/skills/prototype/SKILL.md", ".agents/skills/prototype/UI.md"]},
+    "prototype-logic": {"repository": "mattpocock/skills", "commit": "49dd158d1076134a641b33efb035946536778336", "applicationKind": "bounded-adapter", "entrypoints": [".agents/skills/prototype/SKILL.md", ".agents/skills/prototype/LOGIC.md"]},
+    "grilling": {"repository": "mattpocock/skills", "commit": "49dd158d1076134a641b33efb035946536778336", "applicationKind": "bounded-adapter", "entrypoints": [".agents/skills/grilling/SKILL.md"]},
+    "domain-modeling": {"repository": "mattpocock/skills", "commit": "49dd158d1076134a641b33efb035946536778336", "applicationKind": "bounded-adapter", "entrypoints": [".agents/skills/domain-modeling/SKILL.md", ".agents/skills/domain-modeling/GLOSSARY-FORMAT.md", ".agents/skills/domain-modeling/ADR-FORMAT.md"]},
+    "to-spec": {"repository": "mattpocock/skills", "commit": "49dd158d1076134a641b33efb035946536778336", "entrypoints": [".agents/skills/to-spec/SKILL.md"], "lifecyclePolicy": "disabled"}
+  },
+  "stages": {
+    "workspace-scaffold": [], "workspace-detection": [], "state-init": [],
+    "intent-capture": [], "market-research": [], "feasibility": [], "scope-definition": [], "team-formation": [],
+    "rough-mockups": [
+      {"skill": "prototype-ui", "decision": "use", "inputs": ["intent-statement", "scope-document", "intent-backlog", "timebox"], "outputs": ["exploration-html", "ui-poc-rough-contract"], "adapter": "Bounded adapter, not full upstream execution: borrow single-surface variant switching to generate low-fidelity, self-contained, read-only structural alternatives; AI-DLC owns files and approval; no production polish or throwaway branch operation."},
+      {"skill": "frontend-design", "decision": "use", "inputs": ["approved-common-brief", "prototype-variants"], "outputs": ["visual-direction-notes", "exploration-html"], "adapter": "Apply subject-grounded visual direction while preserving rough-mockups low fidelity."},
+      {"skill": "prototype-logic", "decision": "conditional", "condition": "state_model_uncertainty", "inputs": ["explicit-prototype-question", "domain-scenarios", "uncertainty-source", "timebox"], "outputs": ["logic-prototype-html", "prototype-verdict"], "adapter": "Bounded adapter, not full upstream execution: one question only; no production code, persistence, tests, branch manipulation, or approval."}
+    ],
+    "approval-handoff": [], "reverse-engineering": [], "practices-discovery": [],
+    "requirements-analysis": [
+      {"skill": "grilling", "decision": "conditional", "condition": "unresolved_requirement_decisions", "inputs": ["rough-ui-evidence", "current-requirements", "known-facts"], "outputs": ["question-frontier", "settled-decision-map"], "adapter": "Use only inside AI-DLC Steps 6-8; AI-DLC pending-question flow asks and records answers; do not ask twice or request a separate confirmation."},
+      {"skill": "domain-modeling", "decision": "conditional", "condition": "domain_language_conflict", "inputs": ["requirements", "existing-glossary", "code-evidence"], "outputs": ["term-and-boundary-deltas"], "adapter": "Terminology and domain boundaries only; do not pre-decide types, validation, allowed values, cardinality, or implementation."}
+    ],
+    "user-stories": [],
+    "refined-mockups": [
+      {"skill": "frontend-design", "decision": "use", "inputs": ["approved-requirements", "stories-and-acceptance-criteria", "rough-ui-evidence"], "outputs": ["refined-html", "ui-poc-refined-contract"], "adapter": "Refine against approved requirements and stable screen/state/AC IDs; ordinary AI-DLC stage approval remains authoritative."},
+      {"skill": "prototype-ui", "decision": "conditional", "condition": "unresolved_visual_alternatives", "inputs": ["approved-requirements", "remaining-design-question"], "outputs": ["bounded-refined-variants", "selection-rationale"], "adapter": "Only unresolved visual choices; no new route by default, no branch manipulation, and no claim of approval."}
+    ],
+    "domain-design": [
+      {"skill": "domain-modeling", "decision": "conditional", "condition": "unresolved_domain_terms_or_boundaries", "inputs": ["requirements", "stories", "existing-glossary", "architecture-evidence"], "outputs": ["term-boundary-and-adr-candidates"], "adapter": "Entity ownership, canonical language, boundaries, and qualifying ADR candidates only; core domain-design artifacts and approval own the decision."}
+    ],
+    "units-generation": [], "contract-design": [], "delivery-planning": [],
+    "functional-design": [], "nfr-requirements": [], "nfr-design": [], "infrastructure-design": [],
+    "code-generation": [
+      {"skill": "frontend-design", "decision": "use", "inputs": ["approved-refined-html", "ui-poc-refined-contract", "functional-design", "testing-contract"], "outputs": ["implemented-ui", "ui-poc-implementation-contract"], "adapter": "Implement approved design faithfully; do not reopen aesthetic decisions or alter the Testing Contract; production tests are mandatory."}
+    ],
+    "build-and-test": [], "ci-pipeline": [], "deployment-pipeline": [], "environment-provisioning": [],
+    "deployment-execution": [], "observability-setup": [], "performance-validation": [], "incident-response": [], "feedback-optimization": []
+  }
+}

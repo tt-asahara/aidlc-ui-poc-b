@@ -1,5 +1,14 @@
 # UI PoC B engineering work log
 
+## 2026-10-15 — Deterministic Matt-skill stage harness
+
+- Based work on `feature/ui-poc-foundation` at `2957057207c3a9d4471838492ccafe3dc0770596`; core remains unchanged.
+- Re-read all core stage frontmatter/protocol surfaces, plugin contribution implementation, pinned Matt entrypoints, frontend-design, and the source lock.
+- Added an explicit all-stage use / do-not-use / conditional matrix, machine-readable B routing, and a fail-closed evidence verifier that separates entrypoint-read attestations from applied inputs/outputs.
+- Bounded prototype, grilling, and domain-modeling behavior so AI-DLC remains the sole owner of questions, artifacts, Testing Contracts, and approvals; disabled lifecycle `to-spec` publication.
+- Local checks: 43 Node tests passed; official plugin validate passed; Claude plugin build passed; disposable compose had zero drops, compiled the graph, and was idempotent on its second pass.
+- No live AI-DLC stage, human approval, approval receipt, tracker publication, or Claude model run is claimed by these checks.
+
 ## 2026-10-14 — Pinned foundation and treatment payload
 
 - Started `feature/ui-poc-foundation` from the unmodified AI-DLC v2.11.0 baseline at `6a378b53c0a4fe0641ed7d8de8dfff94264d5b6a`.

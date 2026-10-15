@@ -6,7 +6,9 @@
     "version": "2.11.0",
     "commit": "6a378b53c0a4fe0641ed7d8de8dfff94264d5b6a"
   },
-  "status": "source-pinned-stage-invocation-not-run",
+  "status": "source-pinned-routing-defined-stage-invocation-not-run",
+  "routing": "../b-stage-routing.json",
+  "routing_contract": "../../../docs/b-stage-skill-matrix.md",
   "skills": {
     "content": [
       "A",
@@ -22,5 +24,6 @@
     "layout": "Copy each selected leaf skill directory under .agents/skills/, preserving UI.md, LOGIC.md, GLOSSARY-FORMAT.md, ADR-FORMAT.md, and agents/openai.yaml."
   },
   "source_lock": "source-lock.json",
-  "actual_stage_read_evidence": null
+  "actual_stage_read_evidence": null,
+  "evidence_note": "Routing and file hashes are machine-checkable. A stage-authored skill-read event is an auditable attestation, not proof of model cognition; skill-applied evidence and produced artifacts are recorded separately."
 }
