@@ -15,12 +15,12 @@ node <harness>/tools/ui-poc-b-routing.cjs plan --stage <slug> [--facts <stage-fa
 Missing facts for a conditional rule are a hard stop. A true fact yields `use`; false yields `do-not-use`. The plan names exact entrypoints, inputs, outputs, adapter constraints, and the routing-config hash. The stage writes `ui-poc-skill-evidence.json` in its engine-resolved record directory and verifies it before completion:
 
 ```text
-node <harness>/tools/ui-poc-b-routing.cjs verify --stage <slug> --facts <stage-facts.json> --log <record>/ui-poc-skill-evidence.json
+node <harness>/tools/ui-poc-b-routing.cjs verify --stage <slug> --facts <record>/ui-poc-routing-facts.json --context <record>/ui-poc-routing-context.json --output-path <record>/<stage-output> --log <record>/ui-poc-skill-evidence.json
 ```
 
-`skill-read` proves the exact entrypoint bytes were read; `skill-applied` separately names actual inputs and outputs. A read alone never proves application. The verifier rejects approval and tracker-publication events. It checks repeatable routing and evidence shape, not identical model prose or pixels.
+`skill-read` attests that exact entrypoint bytes were read; the verifier checks those bytes against the source-lock repository, commit, byte size, and Git blob SHA. `skill-applied` separately binds every configured input and output to either a bounded input value or a project-confined file plus SHA-256; outputs must be files. A read alone never proves application. The verifier rejects approval, tracker-publication, and read/application events for unselected or disabled skills. It checks repeatable routing and evidence shape, not identical model prose or pixels.
 
-For a false conditional fact the log records `skill-skipped` with the condition and reason; this is different from silently omitting the skill. Facts must be JSON booleans, and application evidence must include every configured input and output name.
+For a false conditional fact the log records `skill-skipped` with the condition and reason; this is different from silently omitting the skill. Facts must be JSON booleans. The log carries SHA-256 bindings for the facts file and `ui-poc-routing-context.json`, whose stage, `ui-poc-comparison` scope, record ID, positive attempt number, and unit must match the current stage evidence directory and output. This prevents reuse across a different Unit or retry. It remains an auditable agent attestation, not proof that a model cognitively followed prose.
 
 The read event is an auditable agent attestation whose hash is checked against the installed file; software cannot prove that a model cognitively followed prose. Likewise, `prototype-ui`, `prototype-logic`, `grilling`, and `domain-modeling` are recorded as `bounded-adapter`, not as full upstream-skill execution, because the adapter deliberately excludes upstream lifecycle actions that conflict with AI-DLC.
 

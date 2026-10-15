@@ -8,6 +8,8 @@
 - Bounded prototype, grilling, and domain-modeling behavior so AI-DLC remains the sole owner of questions, artifacts, Testing Contracts, and approvals; disabled lifecycle `to-spec` publication.
 - Local checks: 43 Node tests passed; official plugin validate passed; Claude plugin build passed; disposable compose had zero drops, compiled the graph, and was idempotent on its second pass.
 - No live AI-DLC stage, human approval, approval receipt, tracker publication, or Claude model run is claimed by these checks.
+- Review hardening: the router now rejects unselected/disabled skill events, validates installed entrypoints against source-lock Git blob SHA and byte size, binds facts and scope/record/attempt/Unit context, and requires bounded input values or real hashed files plus real hashed output files. Requirements Analysis and Domain Design now receive the blocking routing sensor through the supported additive sensor seam; skipped conditional stages create no sensor obligation.
+- Negative and integration coverage now includes forbidden `to-spec`, modified vendored payload with matching self-reported SHA-256, retry-context reuse, symbolic-only outputs, missing routing logs through the adapter, and a real `aidlc-sensor.ts fire` producing `result: failed`. Combined local Node tests: 51 passed.
 
 ## 2026-10-14 — Pinned foundation and treatment payload
 

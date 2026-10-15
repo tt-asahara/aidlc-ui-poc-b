@@ -8,7 +8,7 @@
   },
   "status": "source-pinned-routing-defined-stage-invocation-not-run",
   "routing": "../b-stage-routing.json",
-  "routing_contract": "../../../docs/b-stage-skill-matrix.md",
+  "routing_contract": "The projected b-stage-routing.json is the runtime authority; source-only rationale is poc/ui-poc/docs/b-stage-skill-matrix.md.",
   "skills": {
     "content": [
       "A",
