@@ -18,7 +18,34 @@ function boundedFile(projectRoot, rel) {
   return fs.readFileSync(file);
 }
 function validContext(value, stage) {
-  return value && value.stage === stage && value.scope === 'ui-poc-comparison' && typeof value.recordId === 'string' && value.recordId.trim() && Number.isInteger(value.attempt) && value.attempt > 0 && (value.unit === null || typeof value.unit === 'string');
+  return value && value.stage === stage && value.scope === 'ui-poc-comparison' && typeof value.recordId === 'string' && value.recordId.trim() && Number.isInteger(value.attempt) && value.attempt > 0 && /^[a-f0-9]{64}$/.test(value.engineStateSha256 || '') && (value.unit === null || typeof value.unit === 'string');
+}
+
+function stateField(content, name) {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return content.match(new RegExp(`^\\*\\*${escaped}\\*\\*:\\s*(.+?)\\s*$`, 'm'))?.[1] ?? null;
+}
+
+function deriveEngineContext(outputPath, stage) {
+  let output;
+  try { output = fs.realpathSync(outputPath); } catch (e) { throw Error(`Cannot resolve stage output: ${e.message}`); }
+  const projectRoot = fs.realpathSync(process.cwd());
+  if (!output.startsWith(projectRoot + path.sep)) throw Error('Stage output is outside the engine project');
+  let cursor = path.dirname(output), recordRoot = null;
+  while (cursor.startsWith(projectRoot + path.sep)) {
+    if (fs.existsSync(path.join(cursor, 'aidlc-state.md'))) { recordRoot = cursor; break; }
+    const parent = path.dirname(cursor); if (parent === cursor) break; cursor = parent;
+  }
+  if (!recordRoot) throw Error('Stage output is not inside an engine record');
+  const rel = path.relative(recordRoot, output).split(path.sep);
+  const stageIndex = rel.lastIndexOf(stage);
+  if (stageIndex < 1) throw Error('Stage output path does not identify the dispatched stage');
+  const unit = rel[0] === 'construction' && stageIndex === 2 ? rel[1] : null;
+  if (rel[0] === 'construction' && stageIndex !== 2) throw Error('Construction output path has no unambiguous Unit');
+  const stateBytes = fs.readFileSync(path.join(recordRoot, 'aidlc-state.md'));
+  const scope = stateField(stateBytes.toString('utf8'), 'Scope');
+  if (scope !== 'ui-poc-comparison') throw Error(`Engine scope is not ui-poc-comparison: ${scope ?? 'missing'}`);
+  return {stage,scope,recordId:path.basename(recordRoot),unit,engineStateSha256:hash(stateBytes)};
 }
 
 function lockedEntrypoint(skillName, entrypoint) {
@@ -64,6 +91,9 @@ function verify(stage, logPath, facts = {}, options = {}) {
     let context;
     try { context = JSON.parse(fs.readFileSync(options.contextPath, 'utf8')); } catch (e) { return fail(`Unreadable routing context: ${e.message}`); }
     if (!validContext(context, stage)) return fail('Invalid routing execution context');
+    let engine;
+    try { engine = deriveEngineContext(options.outputPath, stage); } catch (e) { return fail(e.message); }
+    if (['stage','scope','recordId','unit','engineStateSha256'].some(key => context[key] !== engine[key])) return fail('Routing context does not match the current engine record, Unit, and state snapshot');
     if (log.contextSha256 !== hash(fs.readFileSync(options.contextPath)) || log.factsSha256 !== hash(fs.readFileSync(options.factsPath)) || JSON.stringify(log.context) !== JSON.stringify(context)) return fail('Evidence log is not bound to the current context and facts');
   }
   const selected = new Set(expected.invocations.filter(x => x.decision === 'use').map(x => x.skill));
@@ -130,4 +160,4 @@ function main(argv) {
   } catch (e) { console.log(JSON.stringify(fail(e.message), null, 2)); process.exitCode = 1; }
 }
 if (require.main === module) main(process.argv.slice(2));
-module.exports = {plan, verify, load, lockedEntrypoint};
+module.exports = {plan, verify, load, lockedEntrypoint, deriveEngineContext};

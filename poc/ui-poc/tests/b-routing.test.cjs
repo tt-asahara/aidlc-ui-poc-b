@@ -18,7 +18,11 @@ const expectedStages = [
 ];
 function fixture(t, stage='code-generation', facts={}) {
   const project=fs.mkdtempSync(path.join(os.tmpdir(),'ui-poc-routing-project-')); t.after(()=>fs.rmSync(project,{recursive:true,force:true}));
-  const evidence=path.join(project,'evidence'); fs.mkdirSync(evidence,{recursive:true});
+  const record=path.join(project,'aidlc/spaces/default/intents/intent-001');fs.mkdirSync(record,{recursive:true});
+  const statePath=path.join(record,'aidlc-state.md');fs.writeFileSync(statePath,'# State\n\n**Scope**: ui-poc-comparison\n**Current Stage**: '+stage+'\n**Last Updated**: attempt-1\n');
+  const unit=['code-generation'].includes(stage)?'unit-ui':null;
+  const evidence=unit?path.join(record,'construction',unit,stage):path.join(record,'inception',stage); fs.mkdirSync(evidence,{recursive:true});
+  fs.mkdirSync(path.join(project,'evidence'),{recursive:true});
   const p=plan(stage,facts), events=[];
   for (const inv of p.invocations.filter(x=>x.decision==='use')) {
     for (const entrypoint of inv.entrypoints) {
@@ -31,12 +35,12 @@ function fixture(t, stage='code-generation', facts={}) {
   }
   for (const inv of p.invocations.filter(x=>x.decision==='do-not-use'&&x.condition)) events.push({type:'skill-skipped',skill:inv.skill,condition:inv.condition,reason:'explicit false fact'});
   const factsPath=path.join(evidence,'ui-poc-routing-facts.json'); fs.writeFileSync(factsPath,JSON.stringify(facts));
-  const context={stage,scope:'ui-poc-comparison',recordId:'intent-001',attempt:1,unit:'unit-ui'};
+  const context={stage,scope:'ui-poc-comparison',recordId:'intent-001',attempt:1,unit,engineStateSha256:sha256(statePath)};
   const contextPath=path.join(evidence,'ui-poc-routing-context.json'); fs.writeFileSync(contextPath,JSON.stringify(context));
   const outputPath=path.join(evidence,'stage-output.md'); fs.writeFileSync(outputPath,'stage output');
   const logPath=path.join(evidence,'ui-poc-skill-evidence.json');
   const write=()=>fs.writeFileSync(logPath,JSON.stringify({schema:1,arm:'B',stage,configSha256:p.configSha256,context,contextSha256:sha256(contextPath),factsSha256:sha256(factsPath),events})); write();
-  return {project,evidence,p,events,facts,context,factsPath,contextPath,outputPath,logPath,write};
+  return {project,record,statePath,evidence,p,events,facts,context,factsPath,contextPath,outputPath,logPath,write};
 }
 
 test('routing explicitly covers every core stage', () => {
@@ -93,6 +97,14 @@ test('rejects evidence reused from a different attempt', t => {
   f.context.attempt=2;fs.writeFileSync(f.contextPath,JSON.stringify(f.context));
   const result=verify('code-generation',f.logPath,f.facts,{contextPath:f.contextPath,factsPath:f.factsPath,outputPath:f.outputPath});
   assert.equal(result.pass,false);assert.match(result.findings[0],/not bound to the current context and facts/);
+});
+test('rejects an old context and log bundle after engine state advances', t => {
+  const f=fixture(t),old=process.cwd();process.chdir(f.project);t.after(()=>process.chdir(old));
+  fs.writeFileSync(f.statePath,'# State\n\n**Scope**: ui-poc-comparison\n**Current Stage**: code-generation\n**Last Updated**: attempt-2\n');
+  const result=verify('code-generation',f.logPath,f.facts,{contextPath:f.contextPath,factsPath:f.factsPath,outputPath:f.outputPath});
+  assert.equal(result.pass,false);assert.match(result.findings[0],/does not match the current engine record, Unit, and state snapshot/);
+  const dispatched=spawnSync(process.execPath,[path.join(root,'poc/ui-poc/tools/aidlc-sensor-ui-poc-evidence.ts'),'--stage','code-generation','--output-path',f.outputPath],{cwd:f.project,encoding:'utf8'});
+  assert.equal(dispatched.status,0);const out=JSON.parse(dispatched.stdout);assert.equal(out.pass,false);assert.match(out.findings.join(' '),/does not match the current engine record, Unit, and state snapshot/);
 });
 test('rejects symbolic output names without actual hashed artifacts', t => {
   const f=fixture(t),old=process.cwd();process.chdir(f.project);t.after(()=>process.chdir(old));
